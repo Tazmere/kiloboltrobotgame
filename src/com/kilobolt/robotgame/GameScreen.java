@@ -166,15 +166,15 @@ public class GameScreen extends Screen {
 		int len = touchEvents.size();
 		for (int i = 0; i < len; i++) {
 			TouchEvent event = touchEvents.get(i);
-			if (event.type == TouchEvent.TOUCH_DOWN) {
-
-				if (inBounds(event, 0, 285, 65, 65)) {
+			if (event.type == TouchEvent.TOUCH_DRAGGED) {
 					robot.jump();
 					currentSprite = anim.getImage();
 					robot.setDucked(false);
 				}
+			
+			else if(event.type == TouchEvent.TOUCH_DOWN){
 
-				else if (inBounds(event, 0, 350, 65, 65)) {
+				if (inBounds(event, 0, 350, 65, 65)) {
 
 					if (robot.isDucked() == false && robot.isJumped() == false
 							&& robot.isReadyToFire()) {
