@@ -1,6 +1,7 @@
 package com.kilobolt.robotgame;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,6 +13,8 @@ import com.kilobolt.framework.Graphics;
 import com.kilobolt.framework.Image;
 import com.kilobolt.framework.Input.TouchEvent;
 import com.kilobolt.framework.Screen;
+
+import com.kilobolt.framework.implementation.OnSwipeTouchListener;
 
 public class GameScreen extends Screen {
 	enum GameState {
@@ -166,6 +169,60 @@ public class GameScreen extends Screen {
 		int len = touchEvents.size();
 		for (int i = 0; i < len; i++) {
 			TouchEvent event = touchEvents.get(i);
+			if (event.type == TouchEvent.TOUCH_DOWN) {
+				if (inBounds(event, 0, 285, 65, 65)) {
+					robot.jump();
+					currentSprite = anim.getImage();
+					robot.setDucked(false);
+				}
+				else if (inBounds(event, 0, 350, 65, 65)) {
+					if (robot.isDucked() == false && robot.isJumped() == false
+							&& robot.isReadyToFire()) {
+						robot.shoot();
+					}
+				}
+				else if (inBounds(event, 0, 415, 65, 65)
+						&& robot.isJumped() == false) {
+					currentSprite = Assets.characterDown;
+					robot.setDucked(true);
+					robot.setSpeedX(0);
+				}
+				if (event.x > 400) {
+					// Move right.
+					robot.moveRight();
+					robot.setMovingRight(true);
+				}
+			}
+			if (event.type == TouchEvent.TOUCH_UP) {
+				if (inBounds(event, 0, 415, 65, 65)) {
+					currentSprite = anim.getImage();
+					robot.setDucked(false);
+				}
+				if (inBounds(event, 0, 0, 35, 35)) {
+					pause();
+				}
+				if (event.x > 400) {
+					// Move right.
+					robot.stopRight();
+				}
+			}
+		}
+		// Swipe inputs handled here
+		
+        game.setOnTouchListener(new OnSwipeTouchListener() {
+            public void onSwipeTop() {
+            }
+            public void onSwipeRight() {
+            }
+            public void onSwipeLeft() {
+            }
+            public void onSwipeBottom() {
+            }
+        });
+		
+/*		int len = touchEvents.size();
+		for (int i = 0; i < len; i++) {
+			TouchEvent event = touchEvents.get(i);
 			if (event.type == TouchEvent.TOUCH_DRAGGED) {
 					robot.jump();
 					currentSprite = anim.getImage();
@@ -218,7 +275,8 @@ public class GameScreen extends Screen {
 				}
 			}
 
-		}
+		}*/
+		
 
 		// 2. Check miscellaneous events like death:
 

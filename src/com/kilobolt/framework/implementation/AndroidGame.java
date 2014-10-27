@@ -17,6 +17,7 @@ import com.kilobolt.framework.Game;
 import com.kilobolt.framework.Graphics;
 import com.kilobolt.framework.Input;
 import com.kilobolt.framework.Screen;
+import android.view.GestureDetector;
 
 public abstract class AndroidGame extends Activity implements Game {
     AndroidFastRenderView renderView;
@@ -26,6 +27,7 @@ public abstract class AndroidGame extends Activity implements Game {
     FileIO fileIO;
     Screen screen;
     WakeLock wakeLock;
+    private GestureDetector gestureDetector;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

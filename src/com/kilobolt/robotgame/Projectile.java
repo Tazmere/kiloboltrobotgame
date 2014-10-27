@@ -13,7 +13,7 @@ public class Projectile {
 	public Projectile(int startX, int startY){
 		x = startX;
 		y = startY;
-		speedX = 7;
+		speedX = 14;
 		visible = true;
 		
 		r = new Rect(0, 0, 0, 0);
